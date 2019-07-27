@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>TO DO LIST</title>
+    <script type='text/javascript' src="./vue.js"></script>
+    <!--不能直接闭合 必须</xxx>这样闭合 不然不显示-->
+</head>
+
+<body>
+    <div id="app">
+        <input type="text" v-model="newOne" />
+        <button v-on:click="addNewOne">提交</button>
+        <ul>
+            <todo-item v-for="(item, index) in list" v-bind:index='index' v-bind:todoitem="item" @deletefromchild='deleteFromParent'
+            />
+        </ul>
+    </div>
+
+    <script> 
+        // 创建局部组件
+        var todoItem = {
+            props: ['todoitem', 'index'],
+            template: "<li v-on:click='delete'>{{todoitem}}</li>",
+            methods: {
+                // 通知父组件
+                delete() {
+                    this.$emit("deletefromchild", this.index)
+                }
+            }
+        }
+
+        var app = new Vue({
+            el: "#app",
+            data: {
+                list: [],
+                newOne: ""
+            },
+            components: {
+                todoItem: todoItem // 将定义好的组件注册到该Vue实例里
+            },
+            methods: {
+                addNewOne() {
+                    this.list.push(this.newOne)
+                    this.newOne = ""; // 提交后清空
+                },
+
+                /* 和子组件del相互传值的父组件del */
+                deleteFromParent(index) {
+                    this.list.splice(index, 1);
+                }
+            }
+        });
+
+    </script>
+</body>
+
+</html>
+
+<!-- 创建全局组件
+ 使用时全部小写 驼峰开始的地方 前面要用-分割开来
+    Vue.component("todoItem", {
+        props: ['listitem'],
+        template: "<li>{{listitem}}</li>"
+   }); -->
