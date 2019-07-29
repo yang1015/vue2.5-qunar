@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>模板</title>
+    <script type='text/javascript' src="./vue.js"></script>
+    <!-- 不能直接闭合 必须</xxx>这样闭合 不然不显示 -->
+</head>
+
+<body>
+<div id="root">
+    {{name}}
+    <div v-text="name"></div>
+    <div v-html="name"></div>
+</div>
+
+<script>
+    var root = new Vue({
+        el: "#root",
+        data: {
+            name: "SKYLAR"
+        },
+        components: {},
+        methods: {}
+    });
+
+</script>
+</body>
+</html>

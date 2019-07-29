@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>计算属性</title>
+    <script type='text/javascript' src="./vue.js"></script>
+    <!-- 不能直接闭合 必须</xxx>这样闭合 不然不显示 -->
+</head>
+
+<body>
+<div id="app">
+    {{full}}
+</div>
+
+<script>
+    var app = new Vue({
+        el: "#app",
+        data: {
+            first: "Skylar",
+            last: "Li",
+            age: 18
+        },
+//        methods: {
+//            getFullName() {
+//              return this.first + " " + this.last;
+//            }
+//        },
+        /* 有缓存机制 */
+        computed: {
+            full() { // data中就不能定义full这个变量了 不然会报错
+                console.log("计算了一次")
+                return this.first + " " + this.last
+            }
+        }
+//        watch: {
+//            first() {
+//                console.log("修改first")
+//                this.full = this.first + " " + this.last
+//            },
+//
+//            last() {
+//                console.log("修改last")
+//                this.full = this.first + " " + this.last
+//            }
+//        }
+    });
+
+</script>
+</body>
+</html>

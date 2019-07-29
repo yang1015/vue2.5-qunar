@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <title>TO DO LIST</title>
     <script type='text/javascript' src="./vue.js"></script>
-    <!--不能直接闭合 必须</xxx>这样闭合 不然不显示-->
+    <!-- 不能直接闭合 必须</xxx>这样闭合 不然不显示 -->
 </head>
 
 <body>
@@ -13,8 +12,10 @@
         <input type="text" v-model="newOne" />
         <button v-on:click="addNewOne">提交</button>
         <ul>
-            <todo-item v-for="(item, index) in list" v-bind:index='index' v-bind:todoitem="item" @deletefromchild='deleteFromParent'
-            />
+            <todo-item v-for="(item, index) in list"
+                       v-bind:index='index'
+                       v-bind:todoitem="item"
+                       @deletefromchild='deleteFromParent'/>
         </ul>
     </div>
 
@@ -22,11 +23,10 @@
         // 创建局部组件
         var todoItem = {
             props: ['todoitem', 'index'],
-            template: "<li v-on:click='delete'>{{todoitem}}</li>",
+            template: "<li v-on:click='deleteItem'>{{todoitem}}</li>",
             methods: {
-                // 通知父组件
-                delete() {
-                    this.$emit("deletefromchild", this.index)
+                deleteItem() {
+                    this.$emit("deletefromchild", this.index);  // 通知父组件
                 }
             }
         }
@@ -45,7 +45,6 @@
                     this.list.push(this.newOne)
                     this.newOne = ""; // 提交后清空
                 },
-
                 /* 和子组件del相互传值的父组件del */
                 deleteFromParent(index) {
                     this.list.splice(index, 1);
