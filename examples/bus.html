@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>bus 非父子组件传值</title>
+    <script type='text/javascript' src="./vue.js"></script>
+    <!-- 不能直接闭合 必须</xxx>这样闭合 不然不显示 -->
+</head>
+<body>
+<div id="app">
+    <child :name="n1"></child>
+    <child :name="n2"></child>
+</div>
+<script>
+    var child = {
+        props: ["name"],
+        data() {
+            return {
+                num: this.count
+            }
+        },
+        template: "<h2 @click = 'addOne'>{{name}}</h2>",
+        methods: {
+            addOne() {
+                this.num++;
+                this.$emit("add", 1); // 步长
+            }
+        }
+    }
+
+    var app = new Vue({
+        el: "#app",
+        data: {
+            total: 0,
+            n1: "SKYE",
+            n2: "OLLIE"
+        },
+        components: {
+            child: child
+        }
+    });
+</script>
+</body>
+</html>

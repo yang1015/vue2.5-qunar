@@ -9,7 +9,7 @@
 
 <body>
 <div id="app">
-    {{full}}
+    {{ fullName }}
 </div>
 
 <script>
@@ -27,9 +27,19 @@
 //        },
         /* 有缓存机制 */
         computed: {
-            full() { // data中就不能定义full这个变量了 不然会报错
-                console.log("计算了一次")
-                return this.first + " " + this.last
+//            fullName() { // data中就不能定义full这个变量了 不然会报错
+//                return this.first + " " + this.last;
+//            },
+            // 把fullName这个计算函数升级为一个对象
+            fullName: {
+                get() {
+                    // 和fullName()函数的效果一毛一样
+                    return this.first + " " + this.last;
+                },
+                set(val) {
+                    this.first = val.split(" ")[0];
+                    this.last = val.split(" ")[1];
+                }
             }
         }
 //        watch: {

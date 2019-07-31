@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>循环 + set方法</title>
+    <script type='text/javascript' src="./vue.js"></script>
+    <!-- 不能直接闭合 必须</xxx>这样闭合 不然不显示 -->
+</head>
+
+<body>
+<div id="root">
+    <!--<div v-for="obj of objArr" :key="obj.name">-->
+    <!--<div>{{obj.name}}</div>-->
+    <!--今年-->
+    <!--<div>{{obj.age}}岁了</div>-->
+    <!--</div>-->
+    <!--<template v-for="obj of objArr" :key="obj.name">-->
+        <!--<div>{{obj.name}}</div>-->
+        <!--今年-->
+        <!--<div>{{obj.age}}岁了</div>-->
+    <!--</template>-->
+
+    <div v-for="(item, index) of arr" :key="index">{{item}}</div>
+
+    <div v-for="(item, key, index) of userInfo">index{{index}} : 属性{{key}} --- 内容{{item}}</div>
+</div>
+<script>
+    var root = new Vue({
+        el: "#root",
+        data: {
+            arr: [1,2,3,4],
+            objArr: [{"name": "Skye", "age": 12}, {"name": "Ollie", "age": 13}, {"name": "Pipiaoli", "age": 1}],
+            userInfo: {
+                name: "SKYE",
+                age: 12,
+                sex: "female",
+                height: 173
+            }
+        }
+    });
+</script>
+</body>
+</html>

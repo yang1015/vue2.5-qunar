@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>计数器 refs</title>
+    <script type='text/javascript' src="./vue.js"></script>
+    <!-- 不能直接闭合 必须</xxx>这样闭合 不然不显示 -->
+</head>
+<body>
+<div id="app">
+    <counter ref = "c1" @dispatchcurrent = "calcTotal"></counter>
+    <counter ref = "c2" @dispatchcurrent = "calcTotal"></counter>
+    <h1> {{total}} </h1>
+</div>
+<script>
+    var counter = {
+        data() {
+            return {
+                num: 0
+            }
+        },
+        template: "<h2 @click = 'addOne'>{{num}}</h2>",
+        methods: {
+            addOne() {
+                this.num += 1;
+                this.$emit('dispatchcurrent');
+            }
+        }
+    }
+    var app = new Vue({
+        el: "#app",
+        data: {
+            total: 0
+        },
+        components: {
+            counter: counter
+        },
+        methods: {
+            calcTotal() {
+                // 这是一个共用的求和方法。
+                // 当c1或者c2变化时，因为两个counter之间是相互独立的，即便在counter里emit每次最新的num, 返回给父组件的都是当时操作的那个counter的num
+                // 无法同时派发两个num 所以使用refs来获取两个dom的num
+                this.total = this.$refs.c1.num + this.$refs.c2.num;
+            }
+        }
+    });
+</script>
+</body>
+</html>

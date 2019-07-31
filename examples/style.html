@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>样式绑定 + 条件渲染</title>
+
+    <script type='text/javascript' src="./vue.js"></script>
+    <!-- 不能直接闭合 必须</xxx>这样闭合 不然不显示 -->
+    <style>
+        .activated {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <button @click="click">toggle</button>
+    <br />
+    <!--true => false的过程是删除dom-->
+    <div v-if = "show" :class="[activated]">skye</div>
+    <!--true => false的过程是隐藏dom-->
+    <div v-show = "show" :class="[activated]">skye</div>
+</div>
+<script>
+    var app = new Vue({
+        el: "#app",
+        data: {
+            activated: "",
+            show: false,
+            time: 0
+        },
+        methods: {
+            click() {
+                this.time += 1;
+                this.activated = this.time % 2 != 0 ? "" : "activated";
+                if (this.time == 6) this.show = false;
+            }
+        }
+    });
+</script>
+</body>
+</html>
