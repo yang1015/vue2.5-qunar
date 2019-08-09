@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>v-if + v-once & 动态组件component</title>
+    <script type='text/javascript' src="./vue.js"></script>
+    <!-- 不能直接闭合 必须</xxx>这样闭合 不然不显示 -->
+    <style>
+    </style>
+</head>
+<body>
+
+<div id="app">
+    <!--v-show比v-if的性能更好 不然切换的时候会把组件删掉 再重建 -->
+    <!--<child-one v-show="type === 1"></child-one>-->
+    <!--<child-two v-show="type === 2"></child-two>-->
+
+    <!--v-show比v-if的性能更好 不然切换的时候会把组件删掉 再重建
+     如果加上v-once 就会在第一次获取该组件的时候把它放入缓存，下次直接拿出来用。不会删掉+重建
+     -->
+    <child-one v-if="type==='child-one'" v-once></child-one>
+    <child-two v-if="type==='child-two'" v-once></child-two>
+
+    <!--动态组件
+        当使用component来自动切换组件的时候，注意定义的type必须和自定义组件的名字一致，这样才可以直接切换-->
+    <!--<component :is="type"></component>-->
+
+    <button @click="toggleChild">toggle</button>
+</div>
+
+<script>
+    Vue.component("child-one", {
+        template: "<h1>child 1</h1>"
+    })
+
+    Vue.component("child-two", {
+        template: "<h1>child 2</h1>"
+    })
+
+    var app = new Vue({
+        el: "#app",
+        data: {
+//            type: 1,
+            type: "child-one"
+        },
+        methods: {
+            toggleChild() {
+//                this.type = this.type === 1 ? 2 : 1;
+                this.type = this.type === "child-one" ? "child-two" : "child-one";
+            }
+        }
+    });
+</script>
+</body>
+</html>

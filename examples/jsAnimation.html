@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JS动画 velocity</title>
+    <script type='text/javascript' src="./vue.js"></script>
+    <link rel="stylesheet" type="text/css" href="../animate.css"/>
+    <!-- 不能直接闭合 必须</xxx>这样闭合 不然不显示 -->
+    <style></style>
+</head>
+<body>
+<div id="app">
+    <transition
+            name="fade"
+            @before-enter="handleBeforeEnter"
+            @enter="handleEnter">
+        <h1 v-show="show">SKYE</h1>
+    </transition>
+    <button @click="toggle">toggle</button>
+</div>
+<script>
+    var app = new Vue({
+        el: "#app",
+        data: {
+            show: true
+        },
+        methods: {
+            toggle() {
+                this.show = !this.show;
+            },
+            handleBeforeEnter(el) {
+                el.style.color = "red";
+            },
+            handleEnter(el, done) {
+                setTimeout(() => {
+                    el.style.color = "green";
+                }, 2000)
+
+            },
+        }
+    });
+</script>
+</body>
+</html>

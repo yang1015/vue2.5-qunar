@@ -8,51 +8,51 @@
 </head>
 
 <body>
-    <div id="app">
-        <input type="text" v-model="newOne" />
-        <button v-on:click="addNewOne">提交</button>
-        <ul>
-            <todo-item v-for="(item, index) in list"
-                       v-bind:index='index'
-                       v-bind:todoitem="item"
-                       @deletefromchild='deleteFromParent'/>
-        </ul>
-    </div>
+<div id="app">
+    <input type="text" v-model="newOne"/>
+    <button v-on:click="addNewOne">提交</button>
+    <ul>
+        <todo-item v-for="(item, index) in list"
+                   v-bind:index='index'
+                   v-bind:todoitem="item"
+                   @deletefromchild='deleteFromParent'/>
+    </ul>
+</div>
 
-    <script> 
-        // 创建局部组件
-        var todoItem = {
-            props: ['todoitem', 'index'],
-            template: "<li v-on:click='deleteItem'>{{todoitem}}</li>",
-            methods: {
-                deleteItem() {
-                    this.$emit("deletefromchild", this.index);  // 通知父组件
-                }
+<script>
+    // 创建局部组件
+    var todoItem = {
+        props: ['todoitem', 'index'],
+        template: "<li v-on:click='deleteItem'>{{todoitem}}</li>",
+        methods: {
+            deleteItem() {
+                this.$emit("deletefromchild", this.index);  // 通知父组件
             }
         }
+    }
 
-        var app = new Vue({
-            el: "#app",
-            data: {
-                list: [],
-                newOne: ""
+    var app = new Vue({
+        el: "#app",
+        data: {
+            list: [],
+            newOne: ""
+        },
+        components: {
+            todoItem: todoItem // 将定义好的组件注册到该Vue实例里
+        },
+        methods: {
+            addNewOne() {
+                this.list.push(this.newOne)
+                this.newOne = ""; // 提交后清空
             },
-            components: {
-                todoItem: todoItem // 将定义好的组件注册到该Vue实例里
-            },
-            methods: {
-                addNewOne() {
-                    this.list.push(this.newOne)
-                    this.newOne = ""; // 提交后清空
-                },
-                /* 和子组件del相互传值的父组件del */
-                deleteFromParent(index) {
-                    this.list.splice(index, 1);
-                }
+            /* 和子组件del相互传值的父组件del */
+            deleteFromParent(index) {
+                this.list.splice(index, 1);
             }
-        });
+        }
+    });
 
-    </script>
+</script>
 </body>
 
 </html>

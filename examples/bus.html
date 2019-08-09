@@ -2,42 +2,78 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>bus 非父子组件传值</title>
+    <title>bus 非父子组件传值（Bus/总线/发布订阅模式/观察者模式）</title>
     <script type='text/javascript' src="./vue.js"></script>
     <!-- 不能直接闭合 必须</xxx>这样闭合 不然不显示 -->
 </head>
 <body>
 <div id="app">
-    <child :name="n1"></child>
-    <child :name="n2"></child>
+    <child name="skye"></child>
+    <child name="ollie"></child>
 </div>
 <script>
-    var child = {
-        props: ["name"],
+    // 每一个vue实例上都会挂载这个bus了
+    Vue.prototype.bus = new Vue();
+
+    //    var child = {
+    //        props: {
+    //            name: String
+    //        },
+    //        data() {
+    //            return {
+    //                content: this.name
+    //            }
+    //        },
+    //        template: "<h2 @click = 'getAnotherName'>{{content}}</h2>",
+    //        methods: {
+    //            getAnotherName() {
+    //                console.log(this.content)
+    //                this.bus.$emit("change", this.content)
+    //            }
+    //        },
+    //        mounted() {
+    //            let this_ = this;
+    //
+    //            this.bus.$on("change", function (msg) {
+    //                console.log("msg: " + msg)
+    //                this_.content = msg;
+    //            })
+    //        }
+    //    }
+
+
+    Vue.component("child", {
+        props: {
+            name: String
+        },
         data() {
             return {
-                num: this.count
+                content: this.name
             }
         },
-        template: "<h2 @click = 'addOne'>{{name}}</h2>",
+        template: "<h2 @click = 'getAnotherName'>{{content}}</h2>",
         methods: {
-            addOne() {
-                this.num++;
-                this.$emit("add", 1); // 步长
+            getAnotherName() {
+                console.log(this.content)
+                this.bus.$emit("change", this.content)
             }
+        },
+        mounted() {
+            let this_ = this;
+            this.bus.$on("change", function (msg) {
+                console.log("msg: " + msg)
+                this_.content = msg;
+            })
         }
-    }
+    })
 
     var app = new Vue({
         el: "#app",
         data: {
-            total: 0,
-            n1: "SKYE",
-            n2: "OLLIE"
         },
-        components: {
-            child: child
-        }
+        /*  components: {
+              child: child
+          }*/
     });
 </script>
 </body>
