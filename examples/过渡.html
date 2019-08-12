@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>过渡</title>
+    <script type='text/javascript' src="./vue.js"></script>
+    <!-- 不能直接闭合 必须</xxx>这样闭合 不然不显示 -->
+</head>
+<body>
+<div id="app">
+    <child name="skye"></child>
+</div>
+<script>
+    // 每一个vue实例上都会挂载这个bus了
+    Vue.prototype.bus = new Vue();
+    Vue.component("child", {
+        props: {
+            name: String
+        },
+        data() {
+            return {
+                content: this.name
+            }
+        },
+        template: `<div>
+                    <p>hello</p>
+                    <div>{{content}}</div>
+                </div>`,
+        methods: {}
+    })
+
+    var app = new Vue({
+        el: "#app",
+        data: {}
+    });
+
+</script>
+</body>
+</html>
